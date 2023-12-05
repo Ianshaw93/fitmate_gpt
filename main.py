@@ -2,10 +2,12 @@ import json
 import os
 import time
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import openai
 from openai import OpenAI
 import functions
+
 # from packaging import version
 from dotenv import load_dotenv
 
@@ -22,6 +24,15 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 #     print("OpenAI version is compatible.")
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 # Load assistant ID from file or create new one
@@ -92,6 +103,6 @@ async def check_run_status(check_request: CheckRequest):
     # print("Run timed out")
     return {"response": "timeout"}
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8080)
+# if __name__ == "__main__":
+#     import uvicorn
+#     uvicorn.run(app, host="0.0.0.0", port=8080)
