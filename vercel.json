@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "*.py",
+            "use": "@vercel/python"
+        }
+    ],
+    "routes": [
+        {"src": "/start", "dest": "/start.py"},
+        {"src": "/chat", "dest": "/chat.py"},
+        {"src": "/check", "dest": "/check.py"}
+    ]
+}
