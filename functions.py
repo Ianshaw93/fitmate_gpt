@@ -1,5 +1,5 @@
 import json
-import requests
+import httpx
 import os
 from openai import OpenAI
 from prompts import assistant_instructions
@@ -25,7 +25,7 @@ def create_lead(name, phone):
       "Content-Type": "application/json"
   }
   data = {"records": [{"fields": {"Name": name, "Phone": phone}}]}
-  response = requests.post(url, headers=headers, json=data)
+  response = httpx.post(url, headers=headers, json=data)
   if response.status_code == 200:
     print("Lead created successfully.")
     return response.json()

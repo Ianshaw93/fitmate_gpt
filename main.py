@@ -4,7 +4,6 @@ import time
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import openai
 from openai import OpenAI
 import functions
 
