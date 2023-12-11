@@ -46,6 +46,12 @@ class CheckRequest(BaseModel):
     thread_id: str
     run_id: str
 
+@app.get("/")
+async def quick_test():
+
+    return {"thread_id": "test"}
+
+
 @app.get("/start")
 async def start_conversation():
     thread = client.beta.threads.create()
