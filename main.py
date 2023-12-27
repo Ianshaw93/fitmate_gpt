@@ -85,6 +85,11 @@ async def check_run_status(check_request: CheckRequest):
         run_status = client.beta.threads.runs.retrieve(thread_id=thread_id, run_id=run_id)
         print("Checking run status:", run_status.status)
 
+        if run_status.status == 'failed':
+            # TODO: Handle failed runs - if wrong format of request may start death loop
+            # likely needs to send to human and ping them
+            return {"response": "error"}
+        
         if run_status.status == 'completed':
             messages = client.beta.threads.messages.list(thread_id=thread_id)
             message_content = messages.data[0].content[0].text
@@ -94,6 +99,8 @@ async def check_run_status(check_request: CheckRequest):
                 message_content.value = message_content.value.replace(annotation.text, '')
             print("Run completed, returning response")
             return {"response": message_content.value, "status": "completed"}
+        
+
 
         if run_status.status == 'requires_action':
             print("Action in progress...")
