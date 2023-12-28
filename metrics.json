@@ -43,5 +43,14 @@
         "prompt": "what's the weather like?",
         "response": "I'm not able to answer questions about the weather, but I'm here to assist you with all inquiries related to Fit-Mate's Beta program. If you have any questions regarding that, let me know and I'll be happy to help!",
         "error": false
+    },
+    {
+        "thread_id": "thread_IvoAW2gon26MmScoP1yWMKyy",
+        "run_id": "run_U8DpK85eqfZZXMonhKsvHudj",
+        "starting_date": 1703794732.4295425,
+        "time_taken": -12.75888442993164,
+        "prompt": "what's happening today?",
+        "response": "Hey there! Today Fit-Mate is continuing its Beta trial. It's a unique opportunity for fitness professionals looking to boost sales and client retention. Users get to experience our video content creation tools and streamlined communication solutions, plus direct interaction for product improvement based on your feedback over 6 weeks. There are only 5 spots available, and it requires active feedback and a final testimonial for a participation fee of $50. Start by answering some qualifying questions, and then you can book a discovery call to see if it\u2019s the right fit for you. Interested in joining the Beta program? \ud83d\ude0a\ud83c\udfcb\ufe0f\u200d\u2642\ufe0f\ud83d\udcc8",
+        "error": false
     }
 ]

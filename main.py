@@ -71,6 +71,7 @@ async def chat(chat_request: ChatRequest):
 
 @app.post("/check")
 async def check_run_status(check_request: CheckRequest):
+    print("/check received")
     thread_id = check_request.thread_id
     run_id = check_request.run_id
     if not thread_id or not run_id:
@@ -82,6 +83,7 @@ async def check_run_status(check_request: CheckRequest):
     # return {"response": "error"}
     start_time = time.time()
     interval = 0.5
+    print("pre loop start:", start_time, "time:", time.time(), "diff:", time.time() - start_time)
     while time.time() - start_time < 9:
         run_status = client.beta.threads.runs.retrieve(thread_id=thread_id, run_id=run_id)
         print("Checking run status:", run_status.status)
