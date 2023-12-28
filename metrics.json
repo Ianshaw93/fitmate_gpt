@@ -1,0 +1,47 @@
+[
+    {
+        "thread_id": "thread_xBqEPStcxekgijq0qI4thOUL",
+        "run_id": "run_lyXWgCz8VhifOwcsaYmWF2Pe",
+        "starting_date": 1703777681.6822574,
+        "time_taken": -44.73727536201477,
+        "prompt": "more info",
+        "response": "Fit-mate's Beta program aims to boost sales and retention rates for fitness professionals. Spearheaded by Ian Shaw\u2014a software developer and AI enthusiast with a passion for fitness\u2014the program offers several key benefits:\n\n- Video Content Creation: Produce up to 8 short-form videos or 1 long-form video, with the option to create new footage and voiceovers using AI or the client's footage. Videos can incorporate lead magnets and be posted automatically at set intervals.\n\n- Streamlined Communication: Manage all your messages and emails effortlessly in one place, with flexible options to be hands-on or fully automate responses. The AI can create draft messages or send them directly, and a knowledge base is created to handle FAQs and various languages.\n\n- Products Working Together: Integration between lead magnets in videos and automatic lead info collection in DMs, funneling communication towards other products or desired outcomes.\n\nThe Beta trial consists of a 6-week period of using the communication product, requiring feedback and a testimonial, with only 5 spots available. A $50 participation fee is attached.\n\nInterested parties start by answering qualifying questions and then booking a discovery call with Ian Shaw to ensure the product fits their needs and goals.\n\nTo join the Beta Program, visit 'https://fit-mate-ai.vercel.app/form' to begin your journey. If you're looking for a way to enhance your engagement and efficiency in the fitness industry, this could be a valuable opportunity.",
+        "error": false
+    },
+    {
+        "thread_id": "thread_xBqEPStcxekgijq0qI4thOUL",
+        "run_id": "run_xt7wxkrNsyLCANWQwc4VYmbJ",
+        "starting_date": 1703777885.660794,
+        "time_taken": -6.681596994400024,
+        "prompt": "that's great can I speak to a human?",
+        "response": "Absolutely, we'd love to connect with you. Could you please provide your full name and phone number including the country code? This way, a member of the Fit-Mate team can reach out and address any questions or concerns you have directly.",
+        "error": false
+    },
+    {
+        "thread_id": "thread_xBqEPStcxekgijq0qI4thOUL",
+        "run_id": "run_QKLfcEd9oHi9Fxm5cMf4pAYW",
+        "starting_date": 1703777914.2613976,
+        "time_taken": -18.612395763397217,
+        "prompt": "testing mctest +347859",
+        "response": "Thanks for providing your details! Someone from the Fit-Mate team will be in touch with you shortly. In the meantime, if you're ready to join the Beta Program, head over to 'https://fit-mate-ai.vercel.app/form' to answer the qualifying questions. Looking forward to having you on board!",
+        "error": false
+    },
+    {
+        "thread_id": "thread_YwvADBMZLl7wjkef0xfrCOLu",
+        "run_id": "run_ufykVb0s829tx5lYPWkrntbq",
+        "starting_date": 1703794499.9276423,
+        "time_taken": -6.805245876312256,
+        "prompt": "testing",
+        "response": "Great! If you're interested in learning more about the Fit-Mate Beta Program or wish to join, feel free to ask any questions you have. When you're ready to join the program, just click this link to fill out the qualifying questions: 'https://fit-mate-ai.vercel.app/form'. Let me know how I can assist you today!",
+        "error": false
+    },
+    {
+        "thread_id": "thread_YwvADBMZLl7wjkef0xfrCOLu",
+        "run_id": "run_2wUqWmPS0J2Wy4OAn0yg5tmQ",
+        "starting_date": 1703794527.2883105,
+        "time_taken": -5.009791135787964,
+        "prompt": "what's the weather like?",
+        "response": "I'm not able to answer questions about the weather, but I'm here to assist you with all inquiries related to Fit-Mate's Beta program. If you have any questions regarding that, let me know and I'll be happy to help!",
+        "error": false
+    }
+]

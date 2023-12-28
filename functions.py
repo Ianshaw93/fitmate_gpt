@@ -11,9 +11,44 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 # OPENAI_API_KEY = process.env.OPENAI_API_KEY
 # process.env.
 AIRTABLE_API_KEY = os.getenv('AIRTABLE_API_KEY')
+TELEGRAM_BOT_KEY = os.getenv('TELEGRAM_BOT_KEY')
+TELEGRAM_CHANNEL_ID = os.getenv('TELEGRAM_CHANNEL_ID')
+
 
 # Init OpenAI Client
 client = OpenAI(api_key=OPENAI_API_KEY)
+
+def find_message_with_no_assistant(messages):
+    # Iterate through each message in the data list
+    for message in messages.data:
+        # Check if the assistant_id is None
+        if message.assistant_id is None:
+            # Return the message or its content as needed
+            return message
+
+    # Return None if no message with assistant_id=None is found
+    return None
+
+def ping_telegram(status, messages):
+    # print ("messages: ", messages)
+
+    # if messages is string
+    if isinstance(messages, str):
+      user_input = messages
+    else:
+      user_input = find_message_with_no_assistant(messages)
+      if user_input:
+          user_input = user_input.content[0].text.value
+      else:
+          user_input = "No user input found"
+
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_KEY}/sendMessage"
+    payload = {
+        "chat_id": TELEGRAM_CHANNEL_ID,
+        "text": f"Location: Instagram\n\nStatus: {status}\n\nUser Input: {user_input}",
+    }
+    response = httpx.post(url, data=payload)
+    return response.json()
 
 
 # Add lead to Airtable
@@ -48,7 +83,8 @@ def create_assistant(client):
 
     # To change the knowledge document, modify the file name below to match your document
     # If you want to add multiple files, paste this function into ChatGPT and ask for it to add support for multiple files
-    file = client.files.create(file=open("fit-mate-knowledge.docx", "rb"),
+    # how to allow for a document hosted on the internet?
+    file = client.files.create(file=open("dutch-knowledge.docx", "rb"),
                                purpose='assistants')
 
     assistant = client.beta.assistants.create(

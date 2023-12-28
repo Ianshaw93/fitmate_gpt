@@ -6,21 +6,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from openai import OpenAI
 import functions
-
+from functions import ping_telegram
+from record_transcript import add_metrics_to_db, add_transcript_to_db
 # from packaging import version
 from dotenv import load_dotenv
 
 load_dotenv()
-# required_version = version.parse("1.1.1")
-# current_version = version.parse(openai.__version__)
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
-# if current_version < required_version:
-#     raise ValueError(
-#         f"Error: OpenAI version {openai.__version__} is less than the required version 1.1.1"
-#     )
-# else:
-#     print("OpenAI version is compatible.")
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 app = FastAPI()
 
@@ -33,6 +26,8 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 client = OpenAI(api_key=OPENAI_API_KEY)
+
+last_chat_time = None
 
 # Load assistant ID from file or create new one
 assistant_id = functions.create_assistant(client)
@@ -60,16 +55,18 @@ async def start_conversation():
 
 @app.post("/chat")
 async def chat(chat_request: ChatRequest):
+    global last_chat_time
     thread_id = chat_request.thread_id
     user_input = chat_request.message
     if not thread_id:
         print("Error: Missing thread_id in /chat")
         raise HTTPException(status_code=400, detail="Missing thread_id")
     print("Received message for thread ID:", thread_id, "Message:", user_input)
-
+    last_chat_time = time.time()
     client.beta.threads.messages.create(thread_id=thread_id, role="user", content=user_input)
     run = client.beta.threads.runs.create(thread_id=thread_id, assistant_id=assistant_id)
     print("Run started with ID:", run.id)
+
     return {"run_id": run.id}
 
 @app.post("/check")
@@ -80,27 +77,41 @@ async def check_run_status(check_request: CheckRequest):
         print("Error: Missing thread_id or run_id in /check")
         raise HTTPException(status_code=400, detail="Missing thread_id or run_id")
 
+    # messages = client.beta.threads.messages.list(thread_id=thread_id)
+    # ping_telegram("failed", messages)
+    # return {"response": "error"}
     start_time = time.time()
+    interval = 0.5
     while time.time() - start_time < 9:
         run_status = client.beta.threads.runs.retrieve(thread_id=thread_id, run_id=run_id)
         print("Checking run status:", run_status.status)
 
-        if run_status.status == 'failed':
+        if run_status.status == 'failed' or run_status.status == 'expired':
+            # action telegram message
             # TODO: Handle failed runs - if wrong format of request may start death loop
             # likely needs to send to human and ping them
+            messages = client.beta.threads.messages.list(thread_id=thread_id)
+            ping_telegram(run_status.status, messages)
             return {"response": "error"}
-        
+
+
         if run_status.status == 'completed':
             messages = client.beta.threads.messages.list(thread_id=thread_id)
             message_content = messages.data[0].content[0].text
+            prompt_content = messages.data[1].content[0].text
             # Remove annotations
+            print("messages: ", messages)
+            print("prompt_content: ", message_content)
             annotations = message_content.annotations
             for annotation in annotations:
                 message_content.value = message_content.value.replace(annotation.text, '')
+            prompt_annotations = prompt_content.annotations
+            for annotation in prompt_annotations:
+                prompt_content.value = prompt_content.value.replace(annotation.text, '')
             print("Run completed, returning response")
+            # TODO: add response to database
+            add_metrics_to_db(thread_id, run_id, starting_date=last_chat_time, time_taken=last_chat_time-time.time(), prompt=prompt_content.value, response=message_content.value, error=False)
             return {"response": message_content.value, "status": "completed"}
-        
-
 
         if run_status.status == 'requires_action':
             print("Action in progress...")
@@ -109,12 +120,10 @@ async def check_run_status(check_request: CheckRequest):
                 if tool_call.function.name == "create_lead":
                     arguments = json.loads(tool_call.function.arguments)
                     output = functions.create_lead(arguments["name"], arguments["phone"])
+                    ping_telegram("client added to follow up spreadsheet", f'Name: {arguments["name"]}, Number: {arguments["phone"]}')
                     client.beta.threads.runs.submit_tool_outputs(thread_id=thread_id, run_id=run_id, tool_outputs=[{"tool_call_id": tool_call.id, "output": json.dumps(output)}])
-        time.sleep(1)
+        time.sleep(interval)
 
     print("Run timed out")
     return {"response": "timeout"}
 
-# if __name__ == "__main__":
-#     import uvicorn
-#     uvicorn.run(app, host="0.0.0.0", port=8080)
