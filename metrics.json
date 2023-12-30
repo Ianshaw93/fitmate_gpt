@@ -52,5 +52,14 @@
         "prompt": "what's happening today?",
         "response": "Hey there! Today Fit-Mate is continuing its Beta trial. It's a unique opportunity for fitness professionals looking to boost sales and client retention. Users get to experience our video content creation tools and streamlined communication solutions, plus direct interaction for product improvement based on your feedback over 6 weeks. There are only 5 spots available, and it requires active feedback and a final testimonial for a participation fee of $50. Start by answering some qualifying questions, and then you can book a discovery call to see if it\u2019s the right fit for you. Interested in joining the Beta program? \ud83d\ude0a\ud83c\udfcb\ufe0f\u200d\u2642\ufe0f\ud83d\udcc8",
         "error": false
+    },
+    {
+        "thread_id": "thread_6wh2gX9RthxcpxQu9RJxrchz",
+        "run_id": "run_AATg2aramoh6KGzkIXwjjH5F",
+        "starting_date": 1703936714.4176133,
+        "time_taken": -13.1204833984375,
+        "prompt": "code change",
+        "response": "The Fit-Mate Beta Program is designed to enhance sales and client retention for fitness professionals, offering video content creation, streamlined communication tools, and integration of products to work together. It involves a 6-week trial where users can utilize the communication product and are expected to provide feedback and a testimonial. There are only 5 spots available, and the participation fee is $50. Before signing up, users must answer qualifying questions and book a discovery call with Ian Shaw. \n\nIf you are looking to join the Beta Program, please visit 'https://fit-mate-ai.vercel.app/form' to start the process with the qualifying questions.",
+        "error": false
     }
 ]

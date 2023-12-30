@@ -84,8 +84,8 @@ async def check_run_status(check_request: CheckRequest):
     start_time = time.time()
     interval = 0.5
     print("pre loop start:", start_time, "time:", time.time(), "diff:", time.time() - start_time)
-    # while time.time() - start_time < 9:
-    while True:
+    while time.time() - start_time < 8:
+    # while True:
         run_status = client.beta.threads.runs.retrieve(thread_id=thread_id, run_id=run_id)
         print("Checking run status:", run_status.status)
 
