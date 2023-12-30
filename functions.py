@@ -33,6 +33,7 @@ def ping_telegram(status, messages):
     # print ("messages: ", messages)
 
     # if messages is string
+
     if isinstance(messages, str):
       user_input = messages
     else:
@@ -48,6 +49,7 @@ def ping_telegram(status, messages):
         "text": f"Location: Instagram\n\nStatus: {status}\n\nUser Input: {user_input}",
     }
     response = httpx.post(url, data=payload)
+    print("Telegram response:", response)
     return response.json()
 
 
